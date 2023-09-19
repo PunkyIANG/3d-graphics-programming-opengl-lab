@@ -1,4 +1,5 @@
 ﻿using OpenTK.Graphics.OpenGL4;
+using OpenTK.Mathematics;
 using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Desktop;
 using OpenTK.Windowing.GraphicsLibraryFramework;
@@ -7,6 +8,9 @@ namespace OpenTKTest;
 
 public class Game : GameWindow
 {
+    private const double frameTime = 0.05;
+    private double gameTimer = 0;
+    
     float[] vertices = {
         0.5f,  0.5f, 0.0f,  // top right
         0.5f, -0.5f, 0.0f,  // bottom right
@@ -42,24 +46,22 @@ public class Game : GameWindow
     protected override void OnLoad()
     {
         base.OnLoad();
+        GL.ClearColor(0.2f, 0.5f, 0.6f, 1.0f);
 
         VertexArrayObject = GL.GenVertexArray();
         GL.BindVertexArray(VertexArrayObject);
         
-        GL.ClearColor(0.2f, 0.5f, 0.6f, 1.0f);
         VertexBufferObject = GL.GenBuffer();
         GL.BindBuffer(BufferTarget.ArrayBuffer, VertexBufferObject);
         GL.BufferData(BufferTarget.ArrayBuffer, vertices.Length * sizeof(float), vertices, BufferUsageHint.StaticDraw);
-
+        
         GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, 3 * sizeof(float), 0);
         GL.EnableVertexAttribArray(0);
-        
         
         ElementBufferObject = GL.GenBuffer();
         GL.BindBuffer(BufferTarget.ElementArrayBuffer, ElementBufferObject);
         GL.BufferData(BufferTarget.ElementArrayBuffer, indices.Length * sizeof(uint), indices, BufferUsageHint.StaticDraw);
 
-        
         _shader = new Shader("shader.vert", "shader.frag");
     }
 
@@ -67,26 +69,30 @@ public class Game : GameWindow
     {
         base.OnRenderFrame(e);
 
+        if (e.Time < frameTime)
+            Thread.Sleep((int)((frameTime - e.Time) * 1000));
+        
+        if (!IsFocused) return;
+        
         GL.Clear(ClearBufferMask.ColorBufferBit);
-        
-        // GL.UseProgram();
+
+        var transform = Matrix4.Identity;
+
+        gameTimer += e.Time;
+        {
+            var angleOfRotation = (float)MathHelper.DegreesToRadians(gameTimer * 100);
+            transform *= Matrix4.CreateRotationX(angleOfRotation);
+            transform *= Matrix4.CreateRotationZ(angleOfRotation);
+        }
+
         GL.BindVertexArray(VertexArrayObject);
-        someOpenGLFunctionThatDrawsOurTriangle();
-
-
-        //Code goes here.
-
-        SwapBuffers();
-    }
-
-    private void someOpenGLFunctionThatDrawsOurTriangle()
-    {
-        
         _shader.Use();
-        GL.BindVertexArray(VertexArrayObject);
+        _shader.SetMatrix4("transform", transform);
+
         // GL.DrawArrays(PrimitiveType.Triangles, 0, 3);
         GL.DrawElements(PrimitiveType.Triangles, indices.Length, DrawElementsType.UnsignedInt, 0);
-
+        
+        SwapBuffers();
     }
 
     protected override void OnResize(ResizeEventArgs e)
@@ -100,6 +106,6 @@ public class Game : GameWindow
     {
         base.OnUnload();
         
-        _shader.Dispose();
+        // _shader.Dispose();
     }
 }

@@ -1,6 +1,6 @@
 ﻿using OpenTKTest;
 
-using (var game = new Game(800, 600, "LearnOpenTK"))
+using (var game = new Game(640, 640, "LearnOpenTK"))
 {
     game.Run();
 }
