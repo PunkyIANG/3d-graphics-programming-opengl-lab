@@ -7,16 +7,17 @@ namespace OpenTKTest;
 
 public class ModernGame : GameWindow
 {
+    private Model[] _models =
+    {
+        // new Model()
+    };
+    
     public ModernGame(int width, int height, string title) : base(GameWindowSettings.Default,
         new NativeWindowSettings() { Size = (width, height), Title = title }) { }
     
-    
-
     protected override void OnLoad()
     {
         base.OnLoad();
-
-        
         
         GL.ClearColor(0f, 0f, 0f, 1.0f);
 
@@ -26,9 +27,8 @@ public class ModernGame : GameWindow
     protected override void OnUpdateFrame(FrameEventArgs e)
     {
         base.OnUpdateFrame(e);
-
-
         //good for handling input before stuff gets rendered
+        
         if (KeyboardState.IsKeyDown(Keys.Escape))
         {
             Close();

@@ -3,7 +3,6 @@ using OpenTK.Mathematics;
 using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Desktop;
 using OpenTK.Windowing.GraphicsLibraryFramework;
-using System;
 
 namespace OpenTKTest;
 
@@ -63,7 +62,7 @@ public class Game : GameWindow
         GL.BindBuffer(BufferTarget.ElementArrayBuffer, ElementBufferObject);
         GL.BufferData(BufferTarget.ElementArrayBuffer, indices.Length * sizeof(uint), indices, BufferUsageHint.StaticDraw);
 
-        _shader = new Shader("shader.vert", "shader.frag");
+        _shader = new Shader("Shaders/basic-shader.vert", "Shaders/basic-shader.frag");
     }
 
     protected override void OnRenderFrame(FrameEventArgs e)
@@ -88,7 +87,7 @@ public class Game : GameWindow
 
         GL.BindVertexArray(VertexArrayObject);
         _shader.Use();
-        _shader.SetMatrix4("transform", transform);
+        // _shader.SetMatrix4("transform", transform);
 
         // GL.DrawArrays(PrimitiveType.Triangles, 0, 3);
         GL.DrawElements(PrimitiveType.Triangles, indices.Length, DrawElementsType.UnsignedInt, 0);

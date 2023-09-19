@@ -15,5 +15,11 @@
         <None
             Include="*.frag;*.vert"
             CopyToOutputDirectory="PreserveNewest"/>
+        <None Update="Shaders\basic-shader.frag">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+        <None Update="Shaders\basic-shader.vert">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
     </ItemGroup>
 </Project>
