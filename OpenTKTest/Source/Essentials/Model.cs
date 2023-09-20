@@ -10,6 +10,10 @@ public class Model
     private readonly int _vertexArrayObject;
     private readonly Shader _shader;
     
+    public Vector3 Position { get; set; }
+    public Vector3 Rotation { get; set; }
+    public Vector3 Scale { get; set; }
+    
     // stretch goals
     // transformation matrix
     // deduced from position, rotation, etc
@@ -37,18 +41,17 @@ public class Model
     public void OnRenderFrame(FrameEventArgs e)
     {
         var transform = Matrix4.Identity;
-
-        // gameTimer += e.Time;
-        // {
-        //     var angleOfRotation = (float)MathHelper.DegreesToRadians(gameTimer * 100);
-        //     transform *= Matrix4.CreateRotationX(angleOfRotation);
-        //     transform *= Matrix4.CreateRotationZ(angleOfRotation);
-        // }
+        
+        transform *= Matrix4.CreateScale(Scale);
+        transform *= Matrix4.CreateTranslation(Position);
+        transform *= Matrix4.CreateRotationX(Rotation.X);
+        transform *= Matrix4.CreateRotationY(Rotation.Y);
+        transform *= Matrix4.CreateRotationZ(Rotation.Z);
 
         GL.BindVertexArray(_vertexArrayObject);
         _shader.Use();
-        _shader.SetMatrix4("transform", transform);
-
+        // _shader.SetMatrix4("transform", transform);
+        
         GL.DrawElements(PrimitiveType.Triangles, _indices.Length, DrawElementsType.UnsignedInt, 0);
     }
 }

@@ -8,18 +8,25 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="OpenTK" Version="4.8.0" />
+        <PackageReference Include="CjClutter.ObjLoader" Version="1.0.0"/>
+        <PackageReference Include="OpenTK" Version="4.8.0"/>
     </ItemGroup>
 
     <ItemGroup>
         <None
-            Include="*.frag;*.vert"
-            CopyToOutputDirectory="PreserveNewest"/>
-        <None Update="Shaders\basic-shader.frag">
-          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </None>
-        <None Update="Shaders\basic-shader.vert">
-          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </None>
+                Include="Shaders\*.frag;Shaders\*.vert;Models\**\*.obj;Models\**\*.mtl"
+                CopyToOutputDirectory="PreserveNewest"/>
+        <!--        <None Update="Models\Quad\quad.mtl">-->
+        <!--          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>-->
+        <!--        </None>-->
+        <!--        <None Update="Models\Quad\quad.obj">-->
+        <!--          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>-->
+        <!--        </None>-->
+        <!--        <None Update="Shaders\basic-shader.frag">-->
+        <!--            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>-->
+        <!--        </None>-->
+        <!--        <None Update="Shaders\basic-shader.vert">-->
+        <!--            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>-->
+        <!--        </None>-->
     </ItemGroup>
 </Project>
