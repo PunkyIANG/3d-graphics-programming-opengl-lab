@@ -41,9 +41,9 @@ public static class ModelLoader
         
         foreach (var (face, index) in faces.WithIndex())
         {
-            indices[3 * index]     = (uint) face[0].VertexIndex;
-            indices[3 * index + 1] = (uint) face[1].VertexIndex;
-            indices[3 * index + 2] = (uint) face[2].VertexIndex;
+            indices[3 * index + 1] = (uint) face[1].VertexIndex - 1;
+            indices[3 * index + 2] = (uint) face[2].VertexIndex - 1;
+            indices[3 * index]     = (uint) face[0].VertexIndex - 1;
         }
 
         return indices;

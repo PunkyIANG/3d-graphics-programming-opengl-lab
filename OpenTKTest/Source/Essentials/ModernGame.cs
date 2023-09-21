@@ -19,7 +19,7 @@ public class ModernGame : GameWindow
     protected override void OnLoad()
     {
         base.OnLoad();
-        GL.ClearColor(0f, 0f, 0f, 1.0f);
+        GL.ClearColor(0.2f, 0.6f, 1f, 1.0f);
 
         _models = new[] { Prefabs.GetQuad() };
     }
