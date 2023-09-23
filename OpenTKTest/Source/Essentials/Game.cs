@@ -1,4 +1,5 @@
-﻿using OpenTK.Graphics.OpenGL4;
+﻿using System.Runtime.InteropServices;
+using OpenTK.Graphics.OpenGL4;
 using OpenTK.Mathematics;
 using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Desktop;
@@ -28,9 +29,10 @@ public class Game : GameWindow
     private int ElementBufferObject;
     private Shader _shader;
     
+    private static DebugProc DebugMessageDelegate = OnDebugMessage;
 
     public Game(int width, int height, string title) : base(GameWindowSettings.Default,
-        new NativeWindowSettings() { Size = (width, height), Title = title }) { }
+        new NativeWindowSettings() { Size = (width, height), Title = title , Flags = ContextFlags.Debug}) { }
 
 
     protected override void OnUpdateFrame(FrameEventArgs args)
@@ -46,6 +48,14 @@ public class Game : GameWindow
     protected override void OnLoad()
     {
         base.OnLoad();
+        
+        GL.DebugMessageCallback(DebugMessageDelegate, IntPtr.Zero);
+        GL.Enable(EnableCap.DebugOutput);
+
+// Optionally
+        GL.Enable(EnableCap.DebugOutputSynchronous);
+
+        
         GL.ClearColor(0.2f, 0.5f, 0.6f, 1.0f);
 
         VertexArrayObject = GL.GenVertexArray();
@@ -55,7 +65,13 @@ public class Game : GameWindow
         GL.BindBuffer(BufferTarget.ArrayBuffer, VertexBufferObject);
         GL.BufferData(BufferTarget.ArrayBuffer, vertices.Length * sizeof(float), vertices, BufferUsageHint.StaticDraw);
         
-        GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, 3 * sizeof(float), 0);
+        GL.VertexAttribPointer(
+            index: 0,
+            size: 3,
+            type: VertexAttribPointerType.Float, 
+            normalized: false,
+            stride: 3 * sizeof(float),
+            offset: 0);
         GL.EnableVertexAttribArray(0);
         
         ElementBufferObject = GL.GenBuffer();
@@ -108,4 +124,31 @@ public class Game : GameWindow
         
         // _shader.Dispose();
     }
+    
+    private static void OnDebugMessage(
+        DebugSource source,     // Source of the debugging message.
+        DebugType type,         // Type of the debugging message.
+        int id,                 // ID associated with the message.
+        DebugSeverity severity, // Severity of the message.
+        int length,             // Length of the string in pMessage.
+        IntPtr pMessage,        // Pointer to message string.
+        IntPtr pUserParam)      // The pointer you gave to OpenGL, explained later.
+    {
+        // In order to access the string pointed to by pMessage, you can use Marshal
+        // class to copy its contents to a C# string without unsafe code. You can
+        // also use the new function Marshal.PtrToStringUTF8 since .NET Core 1.1.
+        string message = Marshal.PtrToStringAnsi(pMessage, length);
+
+        // The rest of the function is up to you to implement, however a debug output
+        // is always useful.
+        Console.WriteLine("[{0} source={1} type={2} id={3}] {4}", severity, source, type, id, message);
+
+        // Potentially, you may want to throw from the function for certain severity
+        // messages.
+        if (type == DebugType.DebugTypeError)
+        {
+            throw new Exception(message);
+        }
+    }
+
 }

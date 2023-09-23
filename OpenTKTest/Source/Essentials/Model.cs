@@ -1,4 +1,6 @@
-﻿using OpenTK.Graphics.OpenGL4;
+﻿using System.Diagnostics;
+using System.Runtime.CompilerServices;
+using OpenTK.Graphics.OpenGL4;
 using OpenTK.Mathematics;
 using OpenTK.Windowing.Common;
 
@@ -10,9 +12,9 @@ public class Model
     private readonly int _vertexArrayObject;
     private readonly Shader _shader;
     
-    public Vector3 Position { get; set; }
-    public Vector3 Rotation { get; set; }
-    public Vector3 Scale { get; set; }
+    public Vector3 Position { get; set; } = Vector3.Zero;
+    public Vector3 Rotation { get; set; } = Vector3.Zero;
+    public Vector3 Scale { get; set; } = Vector3.One;
     
     // stretch goals
     // transformation matrix
@@ -26,15 +28,15 @@ public class Model
         _vertexArrayObject = GL.GenVertexArray();
         GL.BindVertexArray(_vertexArrayObject);
         
-        var VertexBufferObject = GL.GenBuffer();
-        GL.BindBuffer(BufferTarget.ArrayBuffer, VertexBufferObject);
+        var vertexBufferObject = GL.GenBuffer();
+        GL.BindBuffer(BufferTarget.ArrayBuffer, vertexBufferObject);
         GL.BufferData(BufferTarget.ArrayBuffer, vertices.Length * sizeof(float), vertices, BufferUsageHint.StaticDraw);
         
         GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, 3 * sizeof(float), 0);
         GL.EnableVertexAttribArray(0);
         
-        var ElementBufferObject = GL.GenBuffer();
-        GL.BindBuffer(BufferTarget.ElementArrayBuffer, ElementBufferObject);
+        var elementBufferObject = GL.GenBuffer();
+        GL.BindBuffer(BufferTarget.ElementArrayBuffer, elementBufferObject);
         GL.BufferData(BufferTarget.ElementArrayBuffer, indices.Length * sizeof(uint), indices, BufferUsageHint.StaticDraw);
     }
 
@@ -44,13 +46,14 @@ public class Model
         
         transform *= Matrix4.CreateScale(Scale);
         transform *= Matrix4.CreateTranslation(Position);
+        //do all rotations in one go
         transform *= Matrix4.CreateRotationX(Rotation.X);
         transform *= Matrix4.CreateRotationY(Rotation.Y);
         transform *= Matrix4.CreateRotationZ(Rotation.Z);
 
         GL.BindVertexArray(_vertexArrayObject);
         _shader.Use();
-        // _shader.SetMatrix4("transform", transform);
+        _shader.SetMatrix4("transform", transform);
         
         GL.DrawElements(PrimitiveType.Triangles, _indices.Length, DrawElementsType.UnsignedInt, 0);
     }
