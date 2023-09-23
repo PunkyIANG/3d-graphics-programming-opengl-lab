@@ -25,7 +25,7 @@ public static class ModelLoader
         var fileStream = new FileStream(modelPath, FileMode.Open);
         var result = objLoader.Load(fileStream);
         
-        var model = new Model(result.GetVertices(), result.GetIndices(), BaseResources.GetUsefulShader());
+        var model = new Model(result.GetVertices(), result.GetIndices(), BaseResources.GetFunkyShader());
         return model;
     }
 

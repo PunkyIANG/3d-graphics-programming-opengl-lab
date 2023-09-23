@@ -11,6 +11,7 @@ public class Model
     private readonly uint[] _indices;
     private readonly int _vertexArrayObject;
     private readonly Shader _shader;
+    public Vector4 Color { get; set; } = new Vector4(0,0,0,1);
     
     public Vector3 Position { get; set; } = Vector3.Zero;
     public Vector3 Rotation { get; set; } = Vector3.Zero;
@@ -24,7 +25,7 @@ public class Model
     {
         _indices = indices;
         _shader = shader;
-        
+
         _vertexArrayObject = GL.GenVertexArray();
         GL.BindVertexArray(_vertexArrayObject);
         
@@ -54,6 +55,7 @@ public class Model
         GL.BindVertexArray(_vertexArrayObject);
         _shader.Use();
         _shader.SetMatrix4("transform", transform);
+        _shader.SetVector4("color", Color);
         
         GL.DrawElements(PrimitiveType.Triangles, _indices.Length, DrawElementsType.UnsignedInt, 0);
     }

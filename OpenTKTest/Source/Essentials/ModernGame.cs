@@ -2,6 +2,7 @@
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using OpenTK.Graphics.OpenGL4;
+using OpenTK.Mathematics;
 using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Desktop;
 using OpenTK.Windowing.GraphicsLibraryFramework;
@@ -41,13 +42,16 @@ public class ModernGame : GameWindow
         
         
         // GL.ClearColor(0.2f, 0.6f, 1f, 1.0f);
-        GL.ClearColor(1f, 1f, 1f, 1f);
+        // GL.ClearColor(1f, 1f, 1f, 1f);
+        GL.ClearColor(0.2f, 0.5f, 0.6f, 1.0f);
         
 
         // _models = new[] { Prefabs.GetQuad() };
         // _models = new[] { ModelLoader.LoadQuad() };
-        _models = new[] { Prefabs.GetArrow(), Prefabs.GetQuad() };
-        
+        _models = new[] { Prefabs.GetQuad(), Prefabs.GetArrow() };
+        // _models = new[] { Prefabs.GetArrow(), Prefabs.GetQuad() };
+        _models[0].Color = Vector4.One;
+        _models[1].Color = new Vector4(0, 0, 0, 1);
     }
     
     /// good for handling input before stuff gets rendered
