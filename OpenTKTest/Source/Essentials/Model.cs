@@ -3,6 +3,7 @@ using System.Runtime.CompilerServices;
 using OpenTK.Graphics.OpenGL4;
 using OpenTK.Mathematics;
 using OpenTK.Windowing.Common;
+using OpenTKTest.Source.Utils;
 
 namespace OpenTKTest;
 
@@ -48,9 +49,12 @@ public class Model
         transform *= Matrix4.CreateScale(Scale);
         transform *= Matrix4.CreateTranslation(Position);
         //do all rotations in one go
-        transform *= Matrix4.CreateRotationX(Rotation.X);
-        transform *= Matrix4.CreateRotationY(Rotation.Y);
-        transform *= Matrix4.CreateRotationZ(Rotation.Z);
+
+        var radRotation = Rotation.DegreesToRads();
+        
+        transform *= Matrix4.CreateRotationX(radRotation.X);
+        transform *= Matrix4.CreateRotationY(radRotation.Y);
+        transform *= Matrix4.CreateRotationZ(radRotation.Z);
 
         GL.BindVertexArray(_vertexArrayObject);
         _shader.Use();
