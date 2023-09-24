@@ -1,4 +1,5 @@
 ﻿using ObjLoader.Loader.Loaders;
+using OpenTKTest.Source.Utils;
 using OpenTKTest.Utils;
 
 namespace OpenTKTest;
@@ -17,18 +18,33 @@ public static class ModelLoader
         1, 2, 3    // second triangle
     };
     
-    public static Model LoadBasicModel(string modelPath)
+    public static Model LoadBasicModel(string objPath)
     {
         var objLoaderFactory = new ObjLoaderFactory();
         var objLoader = objLoaderFactory.Create(new MaterialNullStreamProvider());
+        // var objLoader = objLoaderFactory.Create(new MaterialStreamProvider());
+        // var objLoader = objLoaderFactory.Create(new CustomMaterialStreamProvider());
         
-        var fileStream = new FileStream(modelPath, FileMode.Open);
+        var fileStream = new FileStream(objPath, FileMode.Open);
         var result = objLoader.Load(fileStream);
         
         var model = new Model(result.GetVertices(), result.GetIndices(), BaseResources.GetFunkyShader());
         return model;
     }
 
+    public static Model LoadTexturedModel(string objPath, string materialPath)
+    {
+        var objLoaderFactory = new ObjLoaderFactory();
+        var objLoader = objLoaderFactory.Create(new CustomMaterialStreamProvider(materialPath));
+        
+        var fileStream = new FileStream(objPath, FileMode.Open);
+        var result = objLoader.Load(fileStream);
+        
+        var model = new Model(result.GetVertices(), result.GetIndices(), BaseResources.GetFunkyShader());
+        return model;
+    }
+
+    
     public static Model LoadQuad()
     {
         var model = new Model(_quadVertices, _quadIndices, BaseResources.GetBasicShader());
