@@ -46,20 +46,20 @@ public class ModernGame : GameWindow
         GL.ClearColor(0.2f, 0.5f, 0.6f, 1.0f);
         
 
-        _models = new[] { Prefabs.GetArrow() };
+        _models = new[] { Prefabs.GetTripleArrow()};
         // _models = new[] { Prefabs.GetArrow(), Prefabs.GetArrow(), Prefabs.GetArrow() };
         // _models = new[] { ModelLoader.LoadQuad() };
         // _models = new[] { Prefabs.GetTexturedQuad() };
         // _models = new[] { Prefabs.GetArrow(), Prefabs.GetQuad() };
         // _models[0].Color = Vector4.One;
 
-        // _models[1].Rotation += new Vector3(0, 90, 0);
-        // _models[2].Rotation += new Vector3(0, 0, 90);
+        // _models[1].Rotation += new Vector3(0, 0, 0);
+        // _models[2].Rotation += new Vector3(0, 0, 0);
 
         foreach (var model in _models)
         {
             model.Color = new Vector4(0, 0, 0, 1);
-            model.Rotation += new Vector3(35f, 35f, 35f);
+            model.Rotation += new Vector3(35f, -35f, -21.9f);
         }
     }
     

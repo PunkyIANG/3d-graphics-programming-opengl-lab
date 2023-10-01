@@ -43,7 +43,7 @@ public class Model
     }
 
     public void OnRenderFrame(FrameEventArgs e)
-    {
+    { 
         var transform = Matrix4.Identity;
         
         transform *= Matrix4.CreateScale(Scale);

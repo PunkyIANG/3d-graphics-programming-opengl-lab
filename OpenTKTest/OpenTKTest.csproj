@@ -10,11 +10,12 @@
     <ItemGroup>
         <PackageReference Include="CjClutter.ObjLoader" Version="1.0.0"/>
         <PackageReference Include="OpenTK" Version="4.8.0"/>
+        <PackageReference Include="StbImageSharp" Version="2.27.13" />
     </ItemGroup>
 
     <ItemGroup>
         <None
-                Include="Shaders\*.frag;Shaders\*.vert;Models\**\*.obj;Models\**\*.mtl"
+                Include="Shaders\*.frag;Shaders\*.vert;Models\**\*.obj;Models\**\*.mtl;Textures\*"
                 CopyToOutputDirectory="PreserveNewest"/>
         <!--        <None Update="Models\Quad\quad.mtl">-->
         <!--          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>-->
