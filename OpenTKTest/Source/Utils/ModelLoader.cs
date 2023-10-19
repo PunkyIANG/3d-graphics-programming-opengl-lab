@@ -55,6 +55,12 @@ public static class ModelLoader
         return model;
     }
 
+    public static Model LoadGradientQuad()
+    {
+        var model = new Model(_quadVertices, _quadIndices, BaseResources.GetGradientShader());
+        return model;
+    }
+
     private static float[] GetVertices(this LoadResult loadResult)
     {
         var positions = new float[loadResult.Vertices.Count * 3];

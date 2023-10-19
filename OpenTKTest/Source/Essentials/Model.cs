@@ -58,8 +58,18 @@ public class Model
 
         GL.BindVertexArray(_vertexArrayObject);
         _shader.Use();
-        _shader.SetMatrix4("transform", transform);
-        _shader.SetVector4("color", Color);
+        
+        //TODO: give outside access to shaders, so that I don't have to manage them from inside the model
+        //TODO: also make shader param name misses as warnings instead of errors
+        // _shader.SetMatrix4("transform", transform);
+        // _shader.SetVector4("color", Color);
+        
+        _shader.SetVector4("firstColor", new Vector4(1f, 0f, 0f , 1f));
+        _shader.SetVector4("secondColor", new Vector4(0f, 0f, 1f , 1f));
+        
+        _shader.SetVector3("firstPos", new Vector3(0.5f, 0f, 0f));
+        _shader.SetVector3("secondPos", new Vector3(-0.5f, 0f, 0f));
+
         
         GL.DrawElements(PrimitiveType.Triangles, _indices.Length, DrawElementsType.UnsignedInt, 0);
     }
