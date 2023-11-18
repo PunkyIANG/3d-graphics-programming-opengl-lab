@@ -1,4 +1,5 @@
 ﻿using ObjLoader.Loader.Loaders;
+using OpenTK.Mathematics;
 using OpenTKTest.Source.Utils;
 using OpenTKTest.Utils;
 
@@ -32,7 +33,28 @@ public static class ModelLoader
         // var fileStream = new FileStream(objPath, FileMode.Open);
         var result = objLoader.Load(fileStream);
 
-        var model = new Model(result.GetVertices(), result.GetIndices(), BaseResources.GetFunkyShader());
+        var model = new Model(result.GetVertices(), result.GetIndices(), BaseResources.GetCameraShader());
+        return model;
+    }
+
+    public static Model LoadGradientModel(string objPath, Vector3 firstPos, Vector3 secondPos, Vector4 firstColor, Vector4 secondColor)
+    {
+        var objLoaderFactory = new ObjLoaderFactory();
+        var objLoader = objLoaderFactory.Create(new MaterialNullStreamProvider());
+        // var objLoader = objLoaderFactory.Create(new MaterialStreamProvider());
+        // var objLoader = objLoaderFactory.Create(new CustomMaterialStreamProvider());
+
+        using Stream fileStream = new FileStream(objPath, FileMode.Open);
+        // var fileStream = new FileStream(objPath, FileMode.Open);
+        var result = objLoader.Load(fileStream);
+
+        var model = new Model(result.GetVertices(), result.GetIndices(), BaseResources.GetCameraGradient())
+        {
+            FirstPos = firstPos,
+            SecondPos = secondPos,
+            FirstColor = firstColor,
+            SecondColor = secondColor
+        };
         return model;
     }
 

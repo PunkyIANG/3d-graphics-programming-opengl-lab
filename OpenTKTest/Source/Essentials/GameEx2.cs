@@ -11,7 +11,7 @@ using ErrorCode = OpenTK.Graphics.OpenGL4.ErrorCode;
 
 namespace OpenTKTest;
 
-public class ModernGame : GameWindow
+public class GameEx2 : GameWindow
 {
     private const double frameTime = 0.05;
 
@@ -24,7 +24,7 @@ public class ModernGame : GameWindow
     private double _time;
 
 
-    public ModernGame(int width, int height, string title) : base(GameWindowSettings.Default,
+    public GameEx2(int width, int height, string title) : base(GameWindowSettings.Default,
         new NativeWindowSettings()
         {
             Size = (width, height),
@@ -48,20 +48,13 @@ public class ModernGame : GameWindow
 
 // Optionally
         GL.Enable(EnableCap.DebugOutputSynchronous);
-        GL.Enable(EnableCap.DepthTest);
-        
+
+
         // GL.ClearColor(0.2f, 0.6f, 1f, 1.0f);
         // GL.ClearColor(1f, 1f, 1f, 1f);
         GL.ClearColor(0.2f, 0.5f, 0.6f, 1.0f);
 
-        _models = new[]
-        {
-            Prefabs.GetArrowX(),
-            Prefabs.GetArrowY(),
-            Prefabs.GetArrowZ(),
-            Prefabs.GetSphere(),
-            Prefabs.GetProceduralModel(1, 5),
-        };
+        _models = new[] { Prefabs.Spline(50, 50) };
         // _models = new[] { Prefabs.GetGradientQuad() };
         // _models = new[] { Prefabs.GetTripleArrow()};
         // _models = new[] { Prefabs.GetArrow(), Prefabs.GetArrow(), Prefabs.GetArrow() };
@@ -175,7 +168,6 @@ public class ModernGame : GameWindow
 
 
         GL.Clear(ClearBufferMask.ColorBufferBit);
-        GL.Clear(ClearBufferMask.DepthBufferBit);
 
         foreach (var model in _models)
         {

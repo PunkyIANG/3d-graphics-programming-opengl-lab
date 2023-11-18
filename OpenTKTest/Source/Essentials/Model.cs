@@ -18,6 +18,12 @@ public class Model
     public Vector3 Rotation { get; set; } = Vector3.Zero;
     public Vector3 Scale { get; set; } = Vector3.One;
     
+    public Vector3 FirstPos { get; set; }
+    public Vector3 SecondPos { get; set; }
+
+    public Vector4 FirstColor { get; set; }
+    public Vector4 SecondColor { get; set; }
+
     // stretch goals
     // transformation matrix
     // deduced from position, rotation, etc
@@ -59,16 +65,14 @@ public class Model
         GL.BindVertexArray(_vertexArrayObject);
         // Shader.Use();
         
-        //TODO: give outside access to shaders, so that I don't have to manage them from inside the model
-        //TODO: also make shader param name misses as warnings instead of errors
         Shader.SetMatrix4("transform", transform);
         Shader.SetVector4("color", Color);
         
-        Shader.SetVector4("firstColor", new Vector4(1f, 0f, 0f , 1f));
-        Shader.SetVector4("secondColor", new Vector4(0f, 0f, 1f , 1f));
+        Shader.SetVector4("firstColor", FirstColor);
+        Shader.SetVector4("secondColor", SecondColor);
         
-        Shader.SetVector3("firstPos", new Vector3(0f, 0f, 0f));
-        Shader.SetVector3("secondPos", new Vector3(1f, -1f, 1f));
+        Shader.SetVector3("firstPos", FirstPos);
+        Shader.SetVector3("secondPos", SecondPos);
 
         
         GL.DrawElements(PrimitiveType.Triangles, _indices.Length, DrawElementsType.UnsignedInt, 0);

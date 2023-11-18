@@ -7,4 +7,5 @@ public static class BaseResources
     public static Shader GetUsefulShader() => new("Shaders/spinning-shader.vert", "Shaders/basic-shader.frag");
     public static Shader GetGradientShader() => new("Shaders/gradient-shader.vert", "Shaders/gradient-shader.frag");
     public static Shader GetCameraShader() => new("Shaders/camera-shader.vert", "Shaders/camera-shader.frag");
+    public static Shader GetCameraGradient() => new("Shaders/camera-gradient-shader.vert", "Shaders/camera-gradient-shader.frag");
 }
