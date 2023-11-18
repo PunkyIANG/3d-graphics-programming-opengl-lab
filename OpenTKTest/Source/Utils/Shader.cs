@@ -1,4 +1,5 @@
-﻿using OpenTK.Graphics.OpenGL4;
+﻿using System.Diagnostics;
+using OpenTK.Graphics.OpenGL4;
 using OpenTK.Mathematics;
 
 namespace OpenTKTest
@@ -140,8 +141,15 @@ namespace OpenTKTest
         /// <param name="data">The data to set</param>
         public void SetInt(string name, int data)
         {
-            GL.UseProgram(Handle);
-            GL.Uniform1(_uniformLocations[name], data);
+            if (_uniformLocations.ContainsKey(name))
+            {
+                GL.UseProgram(Handle);
+                GL.Uniform1(_uniformLocations[name], data);
+            }
+            else
+            {
+                Console.WriteLine($"WARNING: {name} is not a valid parameter name for this shader.");
+            }
         }
 
         /// <summary>
@@ -151,8 +159,15 @@ namespace OpenTKTest
         /// <param name="data">The data to set</param>
         public void SetFloat(string name, float data)
         {
-            GL.UseProgram(Handle);
-            GL.Uniform1(_uniformLocations[name], data);
+            if (_uniformLocations.ContainsKey(name))
+            {
+                GL.UseProgram(Handle);
+                GL.Uniform1(_uniformLocations[name], data);
+            }
+            else
+            {
+                Console.WriteLine($"WARNING: {name} is not a valid parameter name for this shader.");
+            }
         }
 
         /// <summary>
@@ -167,8 +182,15 @@ namespace OpenTKTest
         /// </remarks>
         public void SetMatrix4(string name, Matrix4 data)
         {
-            GL.UseProgram(Handle);
-            GL.UniformMatrix4(_uniformLocations[name], true, ref data);
+            if (_uniformLocations.ContainsKey(name))
+            {
+                GL.UseProgram(Handle);
+                GL.UniformMatrix4(_uniformLocations[name], true, ref data);
+            }
+            else
+            {
+                Console.WriteLine($"WARNING: {name} is not a valid parameter name for this shader.");
+            }
         }
 
         /// <summary>
@@ -178,14 +200,28 @@ namespace OpenTKTest
         /// <param name="data">The data to set</param>
         public void SetVector3(string name, Vector3 data)
         {
-            GL.UseProgram(Handle);
-            GL.Uniform3(_uniformLocations[name], data);
+            if (_uniformLocations.ContainsKey(name))
+            {
+                GL.UseProgram(Handle);
+                GL.Uniform3(_uniformLocations[name], data);
+            }
+            else
+            {
+                Console.WriteLine($"WARNING: {name} is not a valid parameter name for this shader.");
+            }
         }
         
         public void SetVector4(string name, Vector4 data)
         {
-            GL.UseProgram(Handle);
-            GL.Uniform4(_uniformLocations[name], data);
+            if (_uniformLocations.ContainsKey(name))
+            {
+                GL.UseProgram(Handle);
+                GL.Uniform4(_uniformLocations[name], data);
+            }
+            else
+            {
+                Console.WriteLine($"WARNING: {name} is not a valid parameter name for this shader.");
+            }
         }   
     }
 }

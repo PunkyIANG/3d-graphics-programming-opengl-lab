@@ -11,7 +11,7 @@ public class Model
 {
     private readonly uint[] _indices;
     private readonly int _vertexArrayObject;
-    private readonly Shader _shader;
+    public readonly Shader Shader;
     public Vector4 Color { get; set; } = new Vector4(0,0,0,1);
     
     public Vector3 Position { get; set; } = Vector3.Zero;
@@ -25,7 +25,7 @@ public class Model
     public Model(float[] vertices, uint[] indices, Shader shader)
     {
         _indices = indices;
-        _shader = shader;
+        Shader = shader;
 
         _vertexArrayObject = GL.GenVertexArray();
         GL.BindVertexArray(_vertexArrayObject);
@@ -57,18 +57,18 @@ public class Model
         transform *= Matrix4.CreateRotationZ(radRotation.Z);
 
         GL.BindVertexArray(_vertexArrayObject);
-        _shader.Use();
+        // Shader.Use();
         
         //TODO: give outside access to shaders, so that I don't have to manage them from inside the model
         //TODO: also make shader param name misses as warnings instead of errors
-        // _shader.SetMatrix4("transform", transform);
-        // _shader.SetVector4("color", Color);
+        Shader.SetMatrix4("transform", transform);
+        Shader.SetVector4("color", Color);
         
-        _shader.SetVector4("firstColor", new Vector4(1f, 0f, 0f , 1f));
-        _shader.SetVector4("secondColor", new Vector4(0f, 0f, 1f , 1f));
+        Shader.SetVector4("firstColor", new Vector4(1f, 0f, 0f , 1f));
+        Shader.SetVector4("secondColor", new Vector4(0f, 0f, 1f , 1f));
         
-        _shader.SetVector3("firstPos", new Vector3(0.5f, 0f, 0f));
-        _shader.SetVector3("secondPos", new Vector3(-0.5f, 0f, 0f));
+        Shader.SetVector3("firstPos", new Vector3(0f, 0f, 0f));
+        Shader.SetVector3("secondPos", new Vector3(1f, -1f, 1f));
 
         
         GL.DrawElements(PrimitiveType.Triangles, _indices.Length, DrawElementsType.UnsignedInt, 0);
