@@ -29,7 +29,8 @@ public class ModernGame : GameWindow
         {
             Size = (width, height),
             Title = title,
-            Flags = ContextFlags.Debug
+            Flags = ContextFlags.Debug,
+            Vsync = VSyncMode.On
         })
     {
         CursorState = CursorState.Grabbed;
@@ -166,8 +167,8 @@ public class ModernGame : GameWindow
         GL.Disable(EnableCap.CullFace);
 
         //vsync n schiit
-        if (e.Time < frameTime)
-            Thread.Sleep((int)((frameTime - e.Time) * 1000));
+        // if (e.Time < frameTime)
+        //     Thread.Sleep((int)((frameTime - e.Time) * 1000));
         // if (!IsFocused) return;
         
         _time += 4.0 * e.Time;
