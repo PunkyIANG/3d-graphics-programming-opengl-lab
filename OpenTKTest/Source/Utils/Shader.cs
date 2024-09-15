@@ -146,10 +146,10 @@ namespace OpenTKTest
                 GL.UseProgram(Handle);
                 GL.Uniform1(_uniformLocations[name], data);
             }
-            else
-            {
-                Console.WriteLine($"WARNING: {name} is not a valid parameter name for this shader.");
-            }
+            // else
+            // {
+            //     Console.WriteLine($"WARNING: {name} is not a valid parameter name for this shader.");
+            // }
         }
 
         /// <summary>
@@ -166,7 +166,7 @@ namespace OpenTKTest
             }
             else
             {
-                Console.WriteLine($"WARNING: {name} is not a valid parameter name for this shader.");
+                // Console.WriteLine($"WARNING: {name} is not a valid parameter name for this shader.");
             }
         }
 
@@ -189,7 +189,7 @@ namespace OpenTKTest
             }
             else
             {
-                Console.WriteLine($"WARNING: {name} is not a valid parameter name for this shader.");
+                // Console.WriteLine($"WARNING: {name} is not a valid parameter name for this shader.");
             }
         }
 
@@ -207,7 +207,7 @@ namespace OpenTKTest
             }
             else
             {
-                Console.WriteLine($"WARNING: {name} is not a valid parameter name for this shader.");
+                // Console.WriteLine($"WARNING: {name} is not a valid parameter name for this shader.");
             }
         }
         
@@ -220,7 +220,7 @@ namespace OpenTKTest
             }
             else
             {
-                Console.WriteLine($"WARNING: {name} is not a valid parameter name for this shader.");
+                // Console.WriteLine($"WARNING: {name} is not a valid parameter name for this shader.");
             }
         }   
     }
